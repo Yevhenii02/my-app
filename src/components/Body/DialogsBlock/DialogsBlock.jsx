@@ -1,7 +1,12 @@
 import React from 'react';
 import styles from './DialogsBlock.module.css';
+
 import DialogItem from './DialogItem/DialogItem';
 import Conversation from './Conversation/Conversation';
+
+import { addMessageActionCreator, setNewMessageTextActionCreator } from '../../../redux/state';
+
+
 
 const DialogsBlock = (props) => {
 
@@ -12,11 +17,11 @@ const DialogsBlock = (props) => {
 
 	let onTextChange = () => {
 		let text = refElement.current.value;
-		props.dispatch({ type: 'SET-NEW-MESSAGE-TEXT', message: text });
+		props.dispatch(setNewMessageTextActionCreator(text));
 	}
 
 	let addMessage = () => {
-		props.dispatch({ type: 'ADD-MESSAGE' });
+		props.dispatch(addMessageActionCreator());
 	}
 
 	return (

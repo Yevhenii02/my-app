@@ -1,3 +1,8 @@
+const ADD_POST = 'ADD-POST';
+const SET_NEW_POST_TEXT = 'SET-NEW-POST-TEXT';
+const ADD_MESSAGE = 'ADD-MESSAGE';
+const SET_NEW_MESSAGE_TEXT = 'SET-NEW-MESSAGE-TEXT';
+
 
 let store = {
 	_state: {
@@ -77,11 +82,11 @@ let store = {
 	},
 
 	dispatch(action) {
-		if (action.type === 'SET-NEW-POST-TEXT') {
+		if (action.type === SET_NEW_POST_TEXT) {
 			console.log(this);
 			this.getState().body.content.setNewPostText(action.message);
 			this._renderEntireTree(this.getState());
-		} else if (action.type === 'ADD-POST') {
+		} else if (action.type === ADD_POST) {
 			let newPost = {
 				id: 5,
 				text: this.getState().body.content.getNewPostText(),
@@ -90,10 +95,10 @@ let store = {
 			this.getState().body.content.postsData.push(newPost);
 			this.getState().body.content.setNewPostText('');
 			this._renderEntireTree(this.getState());
-		} else if (action.type === 'SET-NEW-MESSAGE-TEXT') {
+		} else if (action.type === SET_NEW_MESSAGE_TEXT) {
 			this.getState().body.dialogsBlock.setNewMessageText(action.message);
 			this._renderEntireTree(this.getState());
-		} else if (action.type === 'ADD-MESSAGE') {
+		} else if (action.type === ADD_MESSAGE) {
 			let newMessage = {
 				id: 4,
 				message: this.getState().body.dialogsBlock.getNewMessageText(),
@@ -105,6 +110,41 @@ let store = {
 	}
 }
 
+//POSTS
+export const setNewPostTextActionCreator = (message) => {
+	return (
+		{
+			type: SET_NEW_POST_TEXT,
+			message: message,
+		}
+	)
+}
+
+export const addPostActionCreator = () => {
+	return (
+		{
+			type: ADD_POST,
+		}
+	)
+}
+
+//MESSAGE
+export const setNewMessageTextActionCreator = (message) => {
+	return (
+		{
+			type: SET_NEW_MESSAGE_TEXT,
+			message: message,
+		}
+	)
+}
+
+export const addMessageActionCreator = () => {
+	return (
+		{
+			type: ADD_MESSAGE,
+		}
+	)
+}
 
 export default store;
 window.store = store;
