@@ -1,0 +1,15 @@
+.header {
+	display: flex;
+	height: 80px;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 10px;
+	background: rgb(247, 224, 224);
+	overflow: hidden;
+	object-fit: cover;
+	margin: 0px 0px 10px 0px;
+}
+.header img {
+	flex: 0 0 80px;
+	height: 80px;
+}
