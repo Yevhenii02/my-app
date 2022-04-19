@@ -3,7 +3,7 @@ import styles from './MyPosts.module.css';
 
 import Post from './Post/Post';
 
-import { addPostActionCreator, setNewPostTextActionCreator } from '../../../../redux/state';
+import { addPostActionCreator, setNewPostTextActionCreator } from '../../../../redux/content-reducer';
 
 
 function MyPosts(props) {

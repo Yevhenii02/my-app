@@ -1,8 +1,6 @@
-const ADD_POST = 'ADD-POST';
-const SET_NEW_POST_TEXT = 'SET-NEW-POST-TEXT';
-const ADD_MESSAGE = 'ADD-MESSAGE';
-const SET_NEW_MESSAGE_TEXT = 'SET-NEW-MESSAGE-TEXT';
-
+import contentReducer from './content-reducer';
+import dialogReducer from './dialog-reducer';
+import navReducer from './nav-reducer';
 
 let store = {
 	_state: {
@@ -57,12 +55,12 @@ let store = {
 					{ id: 2, message: "How are you" },
 					{ id: 3, message: "Yo" },
 				],
-				_conversationText: '',
+				_newMessageText: '',
 				getNewMessageText() {
-					return this._conversationText;
+					return this._newMessageText;
 				},
 				setNewMessageText(text) {
-					this._conversationText = text;
+					this._newMessageText = text;
 				}
 			},
 			news: {
@@ -74,76 +72,20 @@ let store = {
 	},
 	_renderEntireTree() { },
 
-	subscribe(observer) {
-		this._renderEntireTree = observer;
-	},
 	getState() {
 		return this._state;
 	},
+	subscribe(observer) {
+		this._renderEntireTree = observer;
+	},
 
 	dispatch(action) {
-		if (action.type === SET_NEW_POST_TEXT) {
-			console.log(this);
-			this.getState().body.content.setNewPostText(action.message);
-			this._renderEntireTree(this.getState());
-		} else if (action.type === ADD_POST) {
-			let newPost = {
-				id: 5,
-				text: this.getState().body.content.getNewPostText(),
-				likesCounter: 0,
-			};
-			this.getState().body.content.postsData.push(newPost);
-			this.getState().body.content.setNewPostText('');
-			this._renderEntireTree(this.getState());
-		} else if (action.type === SET_NEW_MESSAGE_TEXT) {
-			this.getState().body.dialogsBlock.setNewMessageText(action.message);
-			this._renderEntireTree(this.getState());
-		} else if (action.type === ADD_MESSAGE) {
-			let newMessage = {
-				id: 4,
-				message: this.getState().body.dialogsBlock.getNewMessageText(),
-			};
-			this.getState().body.dialogsBlock.conversationData.push(newMessage);
-			this.getState().body.dialogsBlock.setNewMessageText('');
-			this._renderEntireTree(store.getState());
-		}
+		this.getState().body.content = contentReducer(this.getState().body.content, action);
+		this.getState().body.dialogsBlock = dialogReducer(this.getState().body.dialogsBlock, action);
+		this.getState().body.nav = navReducer(this.getState().body.nav, action);
+
+		this._renderEntireTree(this.getState());
 	}
-}
-
-//POSTS
-export const setNewPostTextActionCreator = (message) => {
-	return (
-		{
-			type: SET_NEW_POST_TEXT,
-			message: message,
-		}
-	)
-}
-
-export const addPostActionCreator = () => {
-	return (
-		{
-			type: ADD_POST,
-		}
-	)
-}
-
-//MESSAGE
-export const setNewMessageTextActionCreator = (message) => {
-	return (
-		{
-			type: SET_NEW_MESSAGE_TEXT,
-			message: message,
-		}
-	)
-}
-
-export const addMessageActionCreator = () => {
-	return (
-		{
-			type: ADD_MESSAGE,
-		}
-	)
 }
 
 export default store;
