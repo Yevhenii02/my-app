@@ -7,7 +7,7 @@ function App(props) {
 	return (
 		<div className='app-wrapper'>
 			<Header />
-			<Body body={props.state.body} dispatch={props.dispatch} />
+			<Body state={props.state} dispatch={props.dispatch} />
 		</div>
 	);
 }
